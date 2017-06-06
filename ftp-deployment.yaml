@@ -111,4 +111,3 @@ spec:
         - name: usersdb
           hostPath:
             path: /tmp/pure-ftpd/passwd
-        
