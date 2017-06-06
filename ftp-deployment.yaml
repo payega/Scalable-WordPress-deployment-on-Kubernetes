@@ -1,0 +1,114 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ftp
+  labels:
+    app: ftp
+spec:
+  ports:
+    - port: 21
+      name: ftp
+      targetPort: 21
+      nodePort: 30121
+    - port: 30000
+      name: pass0
+      targetPort: 30000
+      nodePort: 30000
+    - port: 30001
+      name: pass1    
+      targetPort: 30001
+      nodePort: 30001
+    - port: 30002
+      name: pass2    
+      targetPort: 30002
+      nodePort: 30002
+    - port: 30003
+      name: pass3    
+      targetPort: 30003
+      nodePort: 30003
+    - port: 30004
+      name: pass4    
+      targetPort: 30004
+      nodePort: 30004
+    - port: 30005
+      name: pass5    
+      targetPort: 30005
+      nodePort: 30005
+    - port: 30006
+      name: pass6 
+      targetPort: 30006
+      nodePort: 30006
+    - port: 30007
+      name: pass7     
+      targetPort: 30007
+      nodePort: 30007
+    - port: 30008
+      name: pass8     
+      targetPort: 30008
+      nodePort: 30008
+    - port: 30009
+      name: pass9     
+      targetPort: 30009
+      nodePort: 30009
+  selector:
+    app: ftp
+    tier: frontend
+  type: NodePort
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ftp
+  labels:
+    app: ftp
+spec:
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          app: ftp
+          tier: frontend
+      spec:
+        containers:
+        - image: stilliard/pure-ftpd:hardened
+          name: ftp
+          env:
+          - name: PUBLICHOST
+            value: localhost       
+          ports:
+          - containerPort: 21
+            name: ftp
+          - containerPort: 30000
+            name: pass0
+          - containerPort: 30001
+            name: pass1
+          - containerPort: 30002
+            name: pass2
+          - containerPort: 30003
+            name: pass3
+          - containerPort: 30004
+            name: pass4
+          - containerPort: 30005
+            name: pass5
+          - containerPort: 30006
+            name: pass6
+          - containerPort: 30007
+            name: pass7
+          - containerPort: 30008
+            name: pass8
+          - containerPort: 30009
+            name: pass9         
+          volumeMounts:
+            - name: wordpress-storage
+              mountPath: /home/ftpusers
+            - name: usersdb
+              mountPath: /etc/pure-ftpd/passwd             
+        volumes:
+        - name: wordpress-storage
+          hostPath:
+            path: /tmp/data/lv-2
+        - name: usersdb
+          hostPath:
+            path: /tmp/pure-ftpd/passwd
+        
