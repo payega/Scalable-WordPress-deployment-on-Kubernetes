@@ -15,39 +15,39 @@ spec:
       targetPort: 30000
       nodePort: 30000
     - port: 30001
-      name: pass1    
+      name: pass1
       targetPort: 30001
       nodePort: 30001
     - port: 30002
-      name: pass2    
+      name: pass2
       targetPort: 30002
       nodePort: 30002
     - port: 30003
-      name: pass3    
+      name: pass3
       targetPort: 30003
       nodePort: 30003
     - port: 30004
-      name: pass4    
+      name: pass4
       targetPort: 30004
       nodePort: 30004
     - port: 30005
-      name: pass5    
+      name: pass5
       targetPort: 30005
       nodePort: 30005
     - port: 30006
-      name: pass6 
+      name: pass6
       targetPort: 30006
       nodePort: 30006
     - port: 30007
-      name: pass7     
+      name: pass7
       targetPort: 30007
       nodePort: 30007
     - port: 30008
-      name: pass8     
+      name: pass8
       targetPort: 30008
       nodePort: 30008
     - port: 30009
-      name: pass9     
+      name: pass9
       targetPort: 30009
       nodePort: 30009
   selector:
