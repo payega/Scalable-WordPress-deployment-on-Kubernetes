@@ -19,6 +19,7 @@ echo -e "Deleting previous version of wordpress if it exists"
 kubectl delete --ignore-not-found=true svc,pvc,deployment -l app=wordpress
 kubectl delete --ignore-not-found=true secret mysql-pass
 kubectl delete --ignore-not-found=true -f local-volumes.yaml
+kubectl delete --ignore-not-found=true configmap domain-config
 
 kuber=$(kubectl get pods -l app=wordpress)
 if [ ${#kuber} -ne 0 ]; then
@@ -30,10 +31,12 @@ echo 'password' > password.txt
 tr -d '\n' <password.txt >.strippedpassword.txt && mv .strippedpassword.txt password.txt
 kubectl create -f local-volumes.yaml
 kubectl create secret generic mysql-pass --from-file=password.txt
+kubectl create configmap domain-config --from-literal=domain=$DOMAIN
 kubectl create -f mysql-deployment.yaml
 kubectl create -f wordpress-deployment.yaml
+kubectl create -f ftp-deployment.yaml
 sleep 10s
-kubectl scale deployments/wordpress --replicas=2
+kubectl scale deployments/wordpress --replicas=1
 
 PORT=$(kubectl get service wordpress | grep wordpress | sed 's/.*://g' | sed 's/\/.*//g')
 

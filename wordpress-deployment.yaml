@@ -9,6 +9,9 @@ spec:
     - port: 80
       targetPort: 80
       nodePort: 30180
+    - port: 443
+      targetPort: 443
+      nodePort: 30143      
   selector:
     app: wordpress
     tier: frontend
@@ -43,7 +46,7 @@ spec:
         tier: frontend
     spec:
       containers:
-      - image: wordpress:4.7.5-php7.1-apache
+      - image: registry.ng.bluemix.net/payega/wordpress:4.7.5-php7.1-apache
         name: wordpress
         env:
         - name: WORDPRESS_DB_HOST
@@ -55,13 +58,28 @@ spec:
             secretKeyRef:
               name: mysql-pass
               key: password.txt
+        # Define the environment variable
+        - name: DOMAIN
+          valueFrom:
+            configMapKeyRef:
+              # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
+              name: domain-config
+              # Specify the key associated with the value
+              key: domain              
         ports:
         - containerPort: 80
           name: wordpress
+        - containerPort: 443
+          name: wordpressssl          
         volumeMounts:
         - name: wordpress-local-storage
           mountPath: /var/www/html
+        - name: certs
+          mountPath: /var/certs            
       volumes:
       - name: wordpress-local-storage
         persistentVolumeClaim:
           claimName: wp-lv-claim
+      - name: usersdb
+        hostPath:
+          path: /tmp/var/certs          

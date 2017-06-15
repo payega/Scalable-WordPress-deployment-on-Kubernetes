@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: ftp
   labels:
-    app: ftp
+    app: wordpress
 spec:
   ports:
     - port: 21
@@ -67,11 +67,11 @@ spec:
     template:
       metadata:
         labels:
-          app: ftp
+          app: wordpress
           tier: frontend
       spec:
         containers:
-        - image: stilliard/pure-ftpd:hardened
+        - image: registry.ng.bluemix.net/payega/pure-ftpd
           name: ftp
           env:
           - name: PUBLICHOST
