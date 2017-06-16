@@ -9,9 +9,11 @@ spec:
     - port: 80
       targetPort: 80
       nodePort: 30180
+      name: nossl
     - port: 443
       targetPort: 443
-      nodePort: 30143      
+      nodePort: 30143
+      name: ssl
   selector:
     app: wordpress
     tier: frontend
@@ -68,9 +70,9 @@ spec:
               key: domain              
         ports:
         - containerPort: 80
-          name: wordpress
+          name: nossl
         - containerPort: 443
-          name: wordpressssl          
+          name: ssl          
         volumeMounts:
         - name: wordpress-local-storage
           mountPath: /var/www/html
@@ -80,6 +82,6 @@ spec:
       - name: wordpress-local-storage
         persistentVolumeClaim:
           claimName: wp-lv-claim
-      - name: usersdb
+      - name: certs
         hostPath:
           path: /tmp/var/certs          
