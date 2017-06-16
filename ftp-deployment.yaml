@@ -60,7 +60,7 @@ kind: Deployment
 metadata:
   name: ftp
   labels:
-    app: ftp
+    app: wordpress
 spec:
     strategy:
       type: Recreate
@@ -68,7 +68,7 @@ spec:
       metadata:
         labels:
           app: wordpress
-          tier: frontend
+          tier: ftp
       spec:
         containers:
         - image: registry.ng.bluemix.net/payega/pure-ftpd

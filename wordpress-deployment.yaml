@@ -48,7 +48,7 @@ spec:
         tier: frontend
     spec:
       containers:
-      - image: registry.ng.bluemix.net/payega/wordpress:4.7.5-php7.1-apache
+      - image: registry.ng.bluemix.net/payega/wordpress:4.7.5-php7.1-apacheSSL
         name: wordpress
         env:
         - name: WORDPRESS_DB_HOST
