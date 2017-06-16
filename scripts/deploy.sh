@@ -35,10 +35,12 @@ kubectl create configmap domain-config --from-literal=domain=$DOMAIN
 kubectl create -f mysql-deployment.yaml
 kubectl create -f wordpress-deployment.yaml
 kubectl create -f ftp-deployment.yaml
-sleep 10s
+sleep 30s
 ## kubectl scale deployments/wordpress --replicas=2
 
 PORT=$(kubectl get service wordpress | grep wordpress | sed 's/.*://g' | sed 's/\/.*//g')
+POD=$(kubectl get pods | grep wordpress | sed 's/.*://g' | sed 's/\ .*//g')
+cp $DOMAIN.* $POD:/var/certs
 
 echo ""
 echo "View the wordpress at http://$IP_ADDR:$PORT"
