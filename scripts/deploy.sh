@@ -40,7 +40,8 @@ sleep 30s
 
 PORT=$(kubectl get service wordpress | grep wordpress | sed 's/.*://g' | sed 's/\/.*//g')
 POD=$(kubectl get pods | grep wordpress | sed 's/.*://g' | sed 's/\ .*//g')
-cp $DOMAIN.* $POD:/var/certs
+ls -lal
+kubectl cp $DOMAIN.* $POD:/var/certs
 
 echo ""
 echo "View the wordpress at http://$IP_ADDR:$PORT"
