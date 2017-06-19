@@ -41,7 +41,7 @@ sleep 10s
 PORT=$(kubectl get service wordpress | grep wordpress | sed 's/.*://g' | sed 's/\/.*//g')
 POD=$(kubectl get pods | grep wordpress | sed 's/.*://g' | sed 's/\ .*//g')
 POD="$POD:/var/certs"
-DOMAIN="./$DOMAIN.*"
+DOMAIN="$DOMAIN.*"
 ls -lal "$DOMAIN"
 echo "$DOMAIN $POD"
 kubectl cp "$DOMAIN $POD"
