@@ -43,8 +43,7 @@ POD=$(kubectl get pods | grep wordpress | sed 's/.*://g' | sed 's/\ .*//g')
 POD="$POD:/var/certs"
 mycrt="$DOMAIN.crt"
 mykey="$DOMAIN.key"
-ls -lal
-ls -lal mykey
+ls -lal $mykey
 echo "$POD"
 kubectl cp $mycrt $POD
 kubectl cp $mykey $POD
