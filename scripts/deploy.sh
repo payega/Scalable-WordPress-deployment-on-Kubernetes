@@ -43,7 +43,7 @@ POD=$(kubectl get pods | grep wordpress | sed 's/.*://g' | sed 's/\ .*//g')
 POD="$POD:/var/certs"
 DOMAIN="$DOMAIN.*"
 echo "$DOMAIN $POD"
-kubectl cp $DOMAIN $POD
+kubectl cp "$DOMAIN $POD"
 
 echo ""
 echo "View the wordpress at http://$IP_ADDR:$PORT"
