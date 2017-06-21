@@ -29,18 +29,24 @@ fi
 echo -e "Creating pods"
 echo 'password' > password.txt
 tr -d '\n' <password.txt >.strippedpassword.txt && mv .strippedpassword.txt password.txt
-#kubectl create -f local-volumes.yaml
-#kubectl create secret generic mysql-pass --from-file=password.txt
+kubectl create -f local-volumes.yaml
+kubectl create secret generic mysql-pass --from-file=password.txt
 kubectl create configmap domain-config --from-literal=domain=$DOMAIN
-#kubectl create -f mysql-deployment.yaml
-## Copia certificados $DOMAIN.crt y $DOMAIN.key a /var/certs
-kubectl create -f prepwp-deployment.yaml
-#kubectl create -f wordpress-deployment.yaml
-#kubectl create -f ftp-deployment.yaml
+kubectl create -f mysql-deployment.yaml
+kubectl create -f wordpress-deployment.yaml
+kubectl create -f ftp-deployment.yaml
 sleep 10s
 ## kubectl scale deployments/wordpress --replicas=2
 
 PORT=$(kubectl get service wordpress | grep wordpress | sed 's/.*://g' | sed 's/\/.*//g')
+POD=$(kubectl get pods | grep wordpress | sed 's/.*://g' | sed 's/\ .*//g')
+POD="$POD:/var/certs"
+mycrt="$DOMAIN.crt"
+mykey="$DOMAIN.key"
+ls -lal $mykey
+echo "$POD"
+kubectl cp $mycrt $POD
+kubectl cp $mykey $POD
 
 echo ""
 echo "View the wordpress at http://$IP_ADDR:$PORT"
