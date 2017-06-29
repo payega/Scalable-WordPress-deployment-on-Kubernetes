@@ -35,7 +35,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: wpc-lv-claim
+  name: apache-lv-claim
   labels:
     app: wordpress
 spec:
@@ -61,7 +61,7 @@ spec:
         tier: frontend
     spec:
       containers:
-      - image: registry.ng.bluemix.net/payega/wordpress:4.7.5-php7.1-apacheSSL
+      - image: 4.8.0-php7.1-apache
         name: wordpress
         env:
         - name: WORDPRESS_DB_HOST
@@ -72,15 +72,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: mysql-pass
-              key: password.txt
-        # Define the environment variable
-        - name: DOMAIN
-          valueFrom:
-            configMapKeyRef:
-              # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
-              name: domain-config
-              # Specify the key associated with the value
-              key: domain              
+              key: password.txt        
         ports:
         - containerPort: 80
           name: nossl
@@ -89,12 +81,12 @@ spec:
         volumeMounts:
         - name: wordpress-local-storage
           mountPath: /var/www/html
-        - name: certs
-          mountPath: /var/certs            
+        - name: apache2
+          mountPath: /etc/apache2            
       volumes:
       - name: wordpress-local-storage
         persistentVolumeClaim:
           claimName: wp-lv-claim
-      - name: certs
+      - name: apache2
         persistentVolumeClaim:
-          claimName: wpc-lv-claim        
+          claimName: apache-lv-claim        

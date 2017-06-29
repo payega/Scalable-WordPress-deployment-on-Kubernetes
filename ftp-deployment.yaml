@@ -71,7 +71,7 @@ spec:
           tier: ftp
       spec:
         containers:
-        - image: registry.ng.bluemix.net/payega/pure-ftpd
+        - image: stilliard/pure-ftpd
           name: ftp
           env:
           - name: PUBLICHOST
