@@ -30,7 +30,20 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 20Gi
+      storage: 19Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wpc-lv-claim
+  labels:
+    app: wordpress
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -83,5 +96,5 @@ spec:
         persistentVolumeClaim:
           claimName: wp-lv-claim
       - name: certs
-        hostPath:
-          path: /tmp/var/certs          
+        persistentVolumeClaim:
+          claimName: wpc-lv-claim        
