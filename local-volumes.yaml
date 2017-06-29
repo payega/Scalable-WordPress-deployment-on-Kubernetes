@@ -21,9 +21,25 @@ metadata:
     type: local
 spec:
   capacity:
-    storage: 20Gi
+    storage: 19Gi
   accessModes:
     - ReadWriteOnce
   hostPath:
     path: /tmp/data/lv-2
   persistentVolumeReclaimPolicy: Delete
+  ---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-volume-3
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /tmp/data/lv-3
+  persistentVolumeReclaimPolicy: Delete
+
