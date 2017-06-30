@@ -30,20 +30,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 19Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: apache-lv-claim
-  labels:
-    app: wordpress
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
+      storage: 20Gi
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -61,7 +48,7 @@ spec:
         tier: frontend
     spec:
       containers:
-      - image: 4.8.0-php7.1-apache
+      - image: wordpress:4.7.5-php7.1-apache
         name: wordpress
         env:
         - name: WORDPRESS_DB_HOST
@@ -86,7 +73,4 @@ spec:
       volumes:
       - name: wordpress-local-storage
         persistentVolumeClaim:
-          claimName: wp-lv-claim
-      - name: apache2
-        persistentVolumeClaim:
-          claimName: apache-lv-claim        
+          claimName: wp-lv-claim    
