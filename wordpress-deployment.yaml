@@ -67,9 +67,7 @@ spec:
           name: ssl          
         volumeMounts:
         - name: wordpress-local-storage
-          mountPath: /var/www/html
-        - name: apache2
-          mountPath: /etc/apache2            
+          mountPath: /var/www/html         
       volumes:
       - name: wordpress-local-storage
         persistentVolumeClaim:

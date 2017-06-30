@@ -40,7 +40,7 @@ sleep 10s
 PORT=$(kubectl get service wordpress | grep wordpress | sed 's/.*://g' | sed 's/\/.*//g')
 POD=$(kubectl get pods | grep wordpress | sed 's/.*://g' | sed 's/\ .*//g')
 
-kubectl cp .user.ini "$POD:/var/www/html/.user.ini"
+kubectl cp .user.ini "$POD":/var/www/html/.user.ini"
 kubectl cp default-ssl.conf "$POD:/etc/apache2/sites-available/default-ssl.conf"
 kubectl cp ssl-params.conf "$POD:/etc/apache2/conf-available/ssl-params.conf"
 kubectl cp 000-default.conf "$POD:/etc/apache2/sites-available/000-default.conf"
