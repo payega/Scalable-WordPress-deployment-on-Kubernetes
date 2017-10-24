@@ -48,7 +48,7 @@ spec:
         tier: frontend
     spec:
       containers:
-      - image: registry.ng.bluemix.net/payega/wordpress_ssl:latest
+      - image: registry.eu-de.bluemix.net/altamira/wordpress_ssl:latest
         name: wordpress
         env:
         - name: WORDPRESS_DB_HOST
